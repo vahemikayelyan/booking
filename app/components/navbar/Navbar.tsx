@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -19,26 +20,27 @@ const defNavLinks: NavLink[] = [
 ];
 
 export default function Navbar() {
-  const [navLinks, setNavLinks] = useState<NavLink[]>();
+  const [navLinks, setNavLinks] = useState<NavLink[]>(defNavLinks);
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const pathname = usePathname();
 
-  function handleNavLinkClick(selectedLink: NavLink) {
-    setIsHidden(true);
+  function initNavLinks(path: string) {
     defNavLinks.forEach((link) => {
-      link.active = link.path === selectedLink.path;
+      link.active = link.path === path;
     });
     setNavLinks([...defNavLinks]);
   }
 
+  function handleNavLinkClick(selectedLink: NavLink) {
+    setIsHidden(true);
+    initNavLinks(selectedLink.path);
+  }
+
   useEffect(() => {
-    if (!navLinks) {
-      defNavLinks.forEach((link) => {
-        link.active = link.path === pathname;
-      });
-      setNavLinks([...defNavLinks]);
+    if (!navLinks.some((l) => l.active)) {
+      initNavLinks(pathname);
     }
-  }, [pathname]);
+  }, [navLinks, pathname]);
 
   return (
     <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
@@ -54,10 +56,14 @@ export default function Navbar() {
           </span>
         </Link>
         <div className="flex md:order-2">
-          <Button className="mr-2 px-5">Sign In</Button>
-          <Button className="mr-2 md:mr-0" type="blue">
-            Sign Up
-          </Button>
+          <Link href="/">
+            <Button className="mr-2 px-5">Sign In</Button>
+          </Link>
+          <Link href="/">
+            <Button className="mr-2 md:mr-0" type="blue">
+              Sign Up
+            </Button>
+          </Link>
           <button
             type="button"
             data-collapse-toggle="navbar-sticky"
