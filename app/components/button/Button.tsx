@@ -8,9 +8,8 @@ interface Props {
 type ButtonType = "default" | "blue";
 
 const buttonTypes: { [key in ButtonType]: string } = {
-  default:
-    "px-5 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100",
-  blue: "px-4 text-white bg-blue-700 hover:bg-blue-800",
+  default: "text-gray-900 bg-white border border-gray-300 hover:bg-gray-100",
+  blue: "text-white bg-blue-700 hover:bg-blue-800",
 };
 
 const Button: React.FC<Props> = ({ type, className, children, onClick }) => {
@@ -21,7 +20,7 @@ const Button: React.FC<Props> = ({ type, className, children, onClick }) => {
     <button
       type="button"
       onClick={onClick}
-      className={`font-medium rounded-lg text-sm py-2 ${buttonType}`}
+      className={`font-medium rounded-lg text-sm py-2 px-4 ${buttonType}`}
     >
       {children}
     </button>

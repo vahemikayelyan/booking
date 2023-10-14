@@ -54,14 +54,14 @@ export default function Navbar() {
           </span>
         </Link>
         <div className="flex md:order-2">
-          <Button className="mr-2">Sign In</Button>
+          <Button className="mr-2 px-5">Sign In</Button>
           <Button className="mr-2 md:mr-0" type="blue">
             Sign Up
           </Button>
           <button
             type="button"
             data-collapse-toggle="navbar-sticky"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            className="inline-flex items-center p-2 w-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
             aria-controls="navbar-sticky"
             aria-expanded="false"
             onClick={() => setIsHidden(!isHidden)}
