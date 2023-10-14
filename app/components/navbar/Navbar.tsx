@@ -22,9 +22,10 @@ const defNavLinks: NavLink[] = [
 export default function Navbar() {
   const [navLinks, setNavLinks] = useState<NavLink[]>(defNavLinks);
   const [isHidden, setIsHidden] = useState<boolean>(true);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const pathname = usePathname();
 
-  function initNavLinks(path: string) {
+  function initNavLinks(path?: string) {
     defNavLinks.forEach((link) => {
       link.active = link.path === path;
     });
@@ -37,15 +38,20 @@ export default function Navbar() {
   }
 
   useEffect(() => {
-    if (!navLinks.some((l) => l.active)) {
+    if (!isLoaded) {
+      setIsLoaded(true);
       initNavLinks(pathname);
     }
-  }, [navLinks, pathname]);
+  }, [isLoaded, pathname]);
 
   return (
     <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
       <div className="flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link href="/" className="flex items-center">
+        <Link
+          href="/"
+          onClick={() => initNavLinks("/")}
+          className="flex items-center"
+        >
           <img
             src="https://flowbite.com/docs/images/logo.svg"
             className="h-8 mr-3"
@@ -56,7 +62,7 @@ export default function Navbar() {
           </span>
         </Link>
         <div className="flex md:order-2">
-          <Link href="/login">
+          <Link href="/login" onClick={() => initNavLinks()}>
             <Button className="mr-2 px-5">Sign In</Button>
           </Link>
           <Link href="/">
