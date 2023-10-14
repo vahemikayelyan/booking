@@ -56,7 +56,7 @@ export default function Navbar() {
           </span>
         </Link>
         <div className="flex md:order-2">
-          <Link href="/">
+          <Link href="/login">
             <Button className="mr-2 px-5">Sign In</Button>
           </Link>
           <Link href="/">
