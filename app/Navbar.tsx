@@ -86,9 +86,9 @@ export default function Navbar() {
               <li key={link.label} onClick={() => setIsHidden(true)}>
                 <Link
                   href={link.path}
-                  className={`block py-2 pl-3 pr-4 rounded ${
+                  className={`block py-2 pl-3 pr-4 ${
                     link.active
-                      ? "text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:p-0"
+                      ? `text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:p-0 rounded`
                       : `text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0`
                   }`}
                 >
