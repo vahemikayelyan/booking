@@ -3,8 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Button from "../button/Button";
 
-const defNavLinks: { label: string; path: string; active?: boolean }[] = [
+interface NavLink {
+  label: string;
+  path: string;
+  active?: boolean;
+}
+
+const defNavLinks: NavLink[] = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
   { label: "Services", path: "/services" },
@@ -12,15 +19,25 @@ const defNavLinks: { label: string; path: string; active?: boolean }[] = [
 ];
 
 export default function Navbar() {
-  const [navLinks, setNavLinks] = useState(defNavLinks);
-  const [isHidden, setIsHidden] = useState(true);
+  const [navLinks, setNavLinks] = useState<NavLink[]>();
+  const [isHidden, setIsHidden] = useState<boolean>(true);
   const pathname = usePathname();
 
-  useEffect(() => {
+  function handleNavLinkClick(selectedLink: NavLink) {
+    setIsHidden(true);
     defNavLinks.forEach((link) => {
-      link.active = link.path === pathname;
+      link.active = link.path === selectedLink.path;
     });
     setNavLinks([...defNavLinks]);
+  }
+
+  useEffect(() => {
+    if (!navLinks) {
+      defNavLinks.forEach((link) => {
+        link.active = link.path === pathname;
+      });
+      setNavLinks([...defNavLinks]);
+    }
   }, [pathname]);
 
   return (
@@ -37,18 +54,10 @@ export default function Navbar() {
           </span>
         </Link>
         <div className="flex md:order-2">
-          <button
-            type="button"
-            className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mr-2"
-          >
-            Sign In
-          </button>
-          <button
-            type="button"
-            className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2 mr-2 text-center md:mr-0"
-          >
+          <Button className="mr-2">Sign In</Button>
+          <Button className="mr-2 md:mr-0" type="blue">
             Sign Up
-          </button>
+          </Button>
           <button
             type="button"
             data-collapse-toggle="navbar-sticky"
@@ -82,8 +91,8 @@ export default function Navbar() {
           }`}
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
-            {navLinks.map((link) => (
-              <li key={link.label} onClick={() => setIsHidden(true)}>
+            {navLinks?.map((link) => (
+              <li key={link.label} onClick={() => handleNavLinkClick(link)}>
                 <Link
                   href={link.path}
                   className={`block py-2 pl-3 pr-4 ${
