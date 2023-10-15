@@ -2,28 +2,15 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
+import { NavLink } from "./Header";
 
-interface NavLink {
-  label: string;
-  path: string;
-  active?: boolean;
-}
-
-const defNavLinks: NavLink[] = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
-  { label: "Services", path: "/services" },
-  { label: "Contact", path: "/contact" },
-];
-
-export default function Navbar() {
+export default function Navbar({ defNavLinks }: { defNavLinks: NavLink[] }) {
   const [navLinks, setNavLinks] = useState<NavLink[]>(defNavLinks);
   const [isHidden, setIsHidden] = useState<boolean>(true);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const pathname = usePathname();
+  //const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  //const pathname = usePathname();
 
   function initNavLinks(path?: string) {
     defNavLinks.forEach((link) => {
@@ -37,12 +24,12 @@ export default function Navbar() {
     initNavLinks(selectedLink.path);
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!isLoaded) {
       setIsLoaded(true);
       initNavLinks(pathname);
     }
-  }, [isLoaded, pathname]);
+  }, [initNavLinks, isLoaded, pathname]);*/
 
   return (
     <nav className="bg-white w-full z-20 top-0 left-0 border-b border-gray-200">
