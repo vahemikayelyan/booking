@@ -19,9 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <main style={{ marginTop: "75px" }} className="p-4">
-          {children}
-        </main>
+        <main>{children}</main>
       </body>
     </html>
   );
