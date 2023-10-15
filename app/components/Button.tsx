@@ -18,7 +18,6 @@ const Button: React.FC<Props> = ({ type, className, children, onClick }) => {
 
   return (
     <button
-      type="button"
       onClick={onClick}
       className={`font-medium rounded-lg text-sm py-2 px-4 ${buttonType}`}
     >

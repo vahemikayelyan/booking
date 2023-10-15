@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import Button from "../button/Button";
+import Button from "./Button";
 
 interface NavLink {
   label: string;
