@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { headers } from "next/headers";
 import Navbar from "./Navbar";
 
 export interface NavLink {
@@ -22,6 +23,10 @@ export default async function Header() {
   if (!session) {
     navLinks = APP_NAV_LINKS.filter((l) => !l.protected);
   }
+
+  navLinks.forEach((l) => {
+    l.active = process.env.NEXTAUTH_URL + l.path === headers().get("x-url");
+  });
 
   return <Navbar defNavLinks={navLinks} />;
 }

@@ -9,8 +9,6 @@ import { NavLink } from "./Header";
 export default function Navbar({ defNavLinks }: { defNavLinks: NavLink[] }) {
   const [navLinks, setNavLinks] = useState<NavLink[]>(defNavLinks);
   const [isHidden, setIsHidden] = useState<boolean>(true);
-  //const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  //const pathname = usePathname();
 
   function initNavLinks(path?: string) {
     defNavLinks.forEach((link) => {
@@ -23,13 +21,6 @@ export default function Navbar({ defNavLinks }: { defNavLinks: NavLink[] }) {
     setIsHidden(true);
     initNavLinks(selectedLink.path);
   }
-
-  /*useEffect(() => {
-    if (!isLoaded) {
-      setIsLoaded(true);
-      initNavLinks(pathname);
-    }
-  }, [initNavLinks, isLoaded, pathname]);*/
 
   return (
     <nav className="bg-white w-full z-20 top-0 left-0 border-b border-gray-200">
