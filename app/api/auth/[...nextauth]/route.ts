@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const handler = NextAuth({
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", updateAge: 10 },
   providers: [
     CredentialsProvider({
       credentials: { email: {}, password: {} },

@@ -1,12 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import Button from "./Button";
 import { NavLink } from "./Header";
 
-export default function Navbar({ defNavLinks }: { defNavLinks: NavLink[] }) {
+export default function Navbar({
+  defNavLinks,
+  session,
+}: {
+  defNavLinks: NavLink[];
+  session?: {} | null;
+}) {
   const [navLinks, setNavLinks] = useState<NavLink[]>(defNavLinks);
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
@@ -40,14 +47,25 @@ export default function Navbar({ defNavLinks }: { defNavLinks: NavLink[] }) {
           </span>
         </Link>
         <div className="flex md:order-2">
-          <Link href="/login" onClick={() => initNavLinks()}>
-            <Button className="mr-2 px-5">Sign In</Button>
-          </Link>
-          <Link href="/">
-            <Button className="mr-2 md:mr-0" type="blue">
-              Sign Up
+          {!session ? (
+            <>
+              <Link href="/login" onClick={() => initNavLinks()}>
+                <Button className="mr-2 px-5">Sign In</Button>
+              </Link>
+              <Link href="/register">
+                <Button className="mr-2 md:mr-0" type="blue">
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <Button
+              className="w-full py-2.5"
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              Sign out
             </Button>
-          </Link>
+          )}
           <button
             type="button"
             data-collapse-toggle="navbar-sticky"

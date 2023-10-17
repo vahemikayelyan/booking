@@ -1,8 +1,8 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import LoginForm from "./form";
+import RegisterForm from "./form";
 
-export default async function LoginPage() {
+export default async function RegisterPage() {
   const session = await getServerSession();
 
   if (session) {
@@ -11,7 +11,7 @@ export default async function LoginPage() {
 
   return (
     <div className="md:p-6 p-4 bg-gray-50 flex justify-center mx-auto">
-      <LoginForm />
+      <RegisterForm />
     </div>
   );
 }

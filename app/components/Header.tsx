@@ -28,5 +28,5 @@ export default async function Header() {
     l.active = process.env.NEXTAUTH_URL + l.path === headers().get("x-url");
   });
 
-  return <Navbar defNavLinks={navLinks} />;
+  return <Navbar defNavLinks={navLinks} session={session} />;
 }
