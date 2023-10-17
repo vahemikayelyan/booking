@@ -28,9 +28,9 @@ const InputGroup: React.FC<Props> = ({
         id={name}
         name={name}
         type={type}
+        placeholder={placeholder}
         autoComplete={autoComplete}
         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-        placeholder={placeholder}
       />
     </div>
   );
