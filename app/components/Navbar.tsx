@@ -60,7 +60,7 @@ export default function Navbar({
             </>
           ) : (
             <Button
-              className="w-full py-2.5"
+              className="w-full mr-2 md:mr-0"
               onClick={() => signOut({ callbackUrl: "/" })}
             >
               Sign out
