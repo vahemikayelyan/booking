@@ -2,11 +2,12 @@
 
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import Button from "../components/Button";
 import InputGroup from "../components/InputGroup";
 
 export default function LoginForm() {
+  const [errorMsg, setErrorMsg] = useState<string>();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -17,7 +18,9 @@ export default function LoginForm() {
       callbackUrl: "/about",
       redirect: true,
     }).then((response) => {
-      console.log(response);
+      if (!response?.ok) {
+        setErrorMsg("Incorrect credantials!");
+      }
     });
   };
 
@@ -35,6 +38,8 @@ export default function LoginForm() {
           <InputGroup name="email" title="Your email" />
 
           <InputGroup name="password" title="Password" type="password" />
+
+          <small className="text-red-500">{errorMsg}</small>
 
           <div className="flex items-center justify-between">
             <div className="flex items-start">
