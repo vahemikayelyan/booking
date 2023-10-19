@@ -31,16 +31,23 @@ const handler = NextAuth({
       },
     }),
   ],
-  pages: { signIn: "/login" },
   callbacks: {
-    async signIn() {
-      return true;
+    async session(params) {
+      if (params.session.user) {
+        params.session.user.email = params.token.email;
+      }
+
+      return params.session;
     },
-    async jwt(params: any) {
-      //console.log(params);
-      return params;
+    async jwt(params) {
+      if (params.user) {
+        params.token.email = params.user.email;
+      }
+
+      return params.token;
     },
   },
+  pages: { signIn: "/login", error: "/" },
 });
 
 export { handler as GET, handler as POST };

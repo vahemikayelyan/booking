@@ -2,23 +2,30 @@
 
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import Button from "../components/Button";
 import InputGroup from "../components/InputGroup";
 
 export default function LoginForm() {
+  const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string>();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
+
+    setErrorMsg("");
 
     signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
-      callbackUrl: "/about",
-      redirect: true,
+      redirect: false,
     }).then((response) => {
-      if (!response?.ok) {
+      if (response?.ok) {
+        router.refresh();
+        router.push("/contact");
+      } else {
         setErrorMsg("Incorrect credantials!");
       }
     });

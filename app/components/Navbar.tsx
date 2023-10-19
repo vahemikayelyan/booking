@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,10 +13,10 @@ export default function Navbar({
   session,
 }: {
   defNavLinks: NavLink[];
-  session?: {} | null;
+  session?: Session | null;
 }) {
   const [navLinks, setNavLinks] = useState<NavLink[]>(defNavLinks);
-  const [isHidden, setIsHidden] = useState<boolean>(true);
+  const [isHidden, setIsHidden] = useState(true);
 
   function initNavLinks(path?: string) {
     defNavLinks.forEach((link) => {
@@ -59,12 +60,15 @@ export default function Navbar({
               </Link>
             </>
           ) : (
-            <Button
-              className="w-full mr-2 md:mr-0"
-              onClick={() => signOut({ callbackUrl: "/" })}
-            >
-              Sign out
-            </Button>
+            <>
+              <Button
+                className="w-full mr-2 md:mr-0"
+                onClick={() => signOut({ callbackUrl: "/login" })}
+              >
+                Sign out
+              </Button>
+              <span>{session.user?.email}</span>
+            </>
           )}
           <button
             type="button"

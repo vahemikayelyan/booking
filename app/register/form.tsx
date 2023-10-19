@@ -1,13 +1,19 @@
 "use client";
 
 import { FormEvent } from "react";
+import { registerUser } from "../api/auth/register/register";
 import Button from "../components/Button";
 import InputGroup from "../components/InputGroup";
 
 export default function RegisterForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
+    const email = formData.get("email")?.toString() || "";
+    const password = formData.get("password")?.toString() || "";
+
+    registerUser(email, password);
   };
 
   return (
