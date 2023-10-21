@@ -42,7 +42,7 @@ export default function LoginForm() {
           action="#"
           onSubmit={handleSubmit}
         >
-          <InputGroup name="email" title="Your email" />
+          <InputGroup name="email" title="Your email" autoComplete="on" />
 
           <InputGroup name="password" title="Password" type="password" />
 
