@@ -17,18 +17,18 @@ export default function LoginForm() {
 
     setErrorMsg("");
 
-    signIn("credentials", {
+    const response = await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
       redirect: false,
-    }).then((response) => {
-      if (response?.ok) {
-        router.refresh();
-        router.push("/contact");
-      } else {
-        setErrorMsg("Incorrect credantials!");
-      }
     });
+
+    if (response?.ok) {
+      router.refresh();
+      router.push("/services");
+    } else {
+      setErrorMsg("Incorrect credantials!");
+    }
   };
 
   return (

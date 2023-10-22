@@ -1,19 +1,39 @@
 "use client";
 
-import { FormEvent } from "react";
-import { registerUser } from "../api/auth/register/register";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 import Button from "../components/Button";
 import InputGroup from "../components/InputGroup";
 
 export default function RegisterForm() {
+  const router = useRouter();
+  const [errorMsg, setErrorMsg] = useState<string>();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMsg("");
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email")?.toString() || "";
     const password = formData.get("password")?.toString() || "";
+    const response = await fetch("api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-    registerUser(email, password);
+    console.log(await response.json());
+
+    if (response.ok) {
+      //console.log("is ok");
+      //router.refresh();
+      //router.push("/services");
+    } else {
+      //const { error } = response as unknown as { error: string };
+      //console.log(response, 6666666);
+      //setErrorMsg(error);
+    }
   };
 
   return (
@@ -35,6 +55,8 @@ export default function RegisterForm() {
           />
 
           <InputGroup name="password" title="Password" type="password" />
+
+          <small className="text-red-500">{errorMsg}</small>
 
           <Button type="blue" className="w-[6rem] py-2.5">
             Sign up

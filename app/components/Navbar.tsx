@@ -16,8 +16,9 @@ export default function Navbar({
   navLinks: NavLink[];
   session?: Session | null;
 }) {
+  const pathname = usePathname();
   const [isHidden, setIsHidden] = useState(true);
-  const [activePathname, seActivePathname] = useState(usePathname());
+  const [activePathname, seActivePathname] = useState(pathname);
 
   function handleNavLinkClick(pathname: string) {
     setIsHidden(true);
