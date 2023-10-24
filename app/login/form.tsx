@@ -20,7 +20,7 @@ export default function LoginForm() {
     const response = await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
-      callbackUrl: "/services",
+      redirect: false,
     });
 
     if (response?.ok) {
