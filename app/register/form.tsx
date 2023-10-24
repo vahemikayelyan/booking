@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import Button from "../components/Button";
-import InputGroup from "../components/InputGroup";
+import Button from "../../components/Button";
+import InputGroup from "../../components/InputGroup";
 
 export default function RegisterForm() {
   const router = useRouter();

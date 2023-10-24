@@ -4,8 +4,8 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import Button from "../components/Button";
-import InputGroup from "../components/InputGroup";
+import Button from "../../components/Button";
+import InputGroup from "../../components/InputGroup";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function LoginForm() {
     const response = await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
-      redirect: false,
+      callbackUrl: "/services",
     });
 
     if (response?.ok) {
