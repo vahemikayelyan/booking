@@ -22,17 +22,14 @@ export default function RegisterForm() {
       },
       body: JSON.stringify({ email, password }),
     });
+    const result: { ok: boolean; message?: string } = await response.json();
 
-    console.log(await response.json());
-
-    if (response.ok) {
+    if (result.ok) {
       //console.log("is ok");
       //router.refresh();
       //router.push("/services");
     } else {
-      //const { error } = response as unknown as { error: string };
-      //console.log(response, 6666666);
-      //setErrorMsg(error);
+      setErrorMsg(result.message);
     }
   };
 
@@ -54,9 +51,9 @@ export default function RegisterForm() {
             placeholder="name@company.com"
           />
 
-          <InputGroup name="password" title="Password" type="password" />
-
           <small className="text-red-500">{errorMsg}</small>
+
+          <InputGroup name="password" title="Password" type="password" />
 
           <Button type="blue" className="w-[6rem] py-2.5">
             Sign up
