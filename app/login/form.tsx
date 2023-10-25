@@ -1,5 +1,6 @@
 "use client";
 
+import { useLoginStore } from "@/hooks/login-state";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,6 +11,7 @@ import InputGroup from "../../components/InputGroup";
 export default function LoginForm() {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string>();
+  const { setIsLoggedin } = useLoginStore();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -26,6 +28,7 @@ export default function LoginForm() {
     if (response?.ok) {
       router.refresh();
       router.push("/services");
+      setIsLoggedin(true);
     } else {
       setErrorMsg("Incorrect credantials!");
     }

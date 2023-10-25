@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useLoginStore } from "@/hooks/login-state";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import { NavLink } from "./Header";
 
@@ -19,11 +20,19 @@ export default function Navbar({
   const pathname = usePathname();
   const [isHidden, setIsHidden] = useState(true);
   const [activePathname, seActivePathname] = useState(pathname);
+  const { isLoggedin, setIsLoggedin } = useLoginStore();
 
   function handleNavLinkClick(pathname: string) {
     setIsHidden(true);
     seActivePathname(pathname);
   }
+
+  useEffect(() => {
+    if (isLoggedin) {
+      seActivePathname("/services");
+      setIsLoggedin(false);
+    }
+  }, [isLoggedin, setIsLoggedin]);
 
   return (
     <nav className="bg-white w-full z-20 top-0 left-0 border-b border-gray-200">
