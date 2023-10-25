@@ -16,3 +16,10 @@ model User {
   email String @unique
   password String
 }
+
+model Provider {
+  id String @id @default(dbgenerated())
+  name String
+  email String @unique
+  password String
+}
