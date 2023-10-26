@@ -1,12 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import Button from "../../components/Button";
 import InputGroup from "../../components/InputGroup";
 
 export default function RegisterForm() {
-  const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string>();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,10 +46,9 @@ export default function RegisterForm() {
             name="email"
             title="Your email"
             autoComplete="on"
+            error={errorMsg}
             placeholder="name@company.com"
           />
-
-          <small className="text-red-500">{errorMsg}</small>
 
           <InputGroup name="password" title="Password" type="password" />
 

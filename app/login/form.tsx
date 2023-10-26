@@ -1,5 +1,6 @@
 "use client";
 
+import { useActivePathnameStore } from "@/hooks/active-pathname";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,6 +11,7 @@ import InputGroup from "../../components/InputGroup";
 export default function LoginForm() {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string>();
+  const { setActivePathname } = useActivePathnameStore();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -26,6 +28,7 @@ export default function LoginForm() {
     if (response?.ok) {
       router.refresh();
       router.push("/services");
+      setActivePathname("/services");
     } else {
       setErrorMsg("Incorrect credantials!");
     }
@@ -38,15 +41,18 @@ export default function LoginForm() {
           Sign in to your account
         </h1>
         <form
-          className="space-y-4 md:space-y-6"
           action="#"
+          className="space-y-4 md:space-y-6"
           onSubmit={handleSubmit}
         >
-          <InputGroup name="email" title="Your email" autoComplete="on" />
+          <InputGroup
+            name="email"
+            title="Your email"
+            autoComplete="on"
+            error={errorMsg}
+          />
 
           <InputGroup name="password" title="Password" type="password" />
-
-          <small className="text-red-500">{errorMsg}</small>
 
           <div className="flex items-center justify-between">
             <div className="flex items-start">

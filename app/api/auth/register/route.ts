@@ -7,6 +7,18 @@ export async function POST(req: Request) {
   const { email, password } = await req.json();
   const hashedPassword = bcrypt.hashSync(password, salt);
 
+  if (!email || email.trim() === "") {
+    return Response.json({
+      message: "Email is required and cannot be empty.",
+    });
+  }
+
+  if (!password || password.trim() === "") {
+    return Response.json({
+      message: "Password is required and cannot be empty.",
+    });
+  }
+
   try {
     const user = await prisma.user.create({
       data: {
@@ -27,7 +39,6 @@ export async function POST(req: Request) {
       });
     }
   } catch (e) {
-    console.log(e);
     let message: string = "Sorry something went wrong. Please try again.";
 
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
