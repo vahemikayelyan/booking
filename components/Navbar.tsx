@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useLoginStore } from "@/hooks/login-state";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import { NavLink } from "./Header";
+import NavItem from "./NavItem";
 
 export default function Navbar({
   navLinks,
@@ -17,31 +17,18 @@ export default function Navbar({
   navLinks: NavLink[];
   session?: Session | null;
 }) {
-  const pathname = usePathname();
   const [isHidden, setIsHidden] = useState(true);
-  const [activePathname, seActivePathname] = useState(pathname);
-  const { isLoggedin, setIsLoggedin } = useLoginStore();
+  const newNavLinks = [...navLinks];
+  const pathname = usePathname();
 
-  function handleNavLinkClick(pathname: string) {
-    setIsHidden(true);
-    seActivePathname(pathname);
-  }
-
-  useEffect(() => {
-    if (isLoggedin) {
-      seActivePathname("/services");
-      setIsLoggedin(false);
-    }
-  }, [isLoggedin, setIsLoggedin]);
+  newNavLinks.forEach((l) => {
+    l.active = l.path === pathname;
+  });
 
   return (
     <nav className="bg-white w-full z-20 top-0 left-0 border-b border-gray-200">
       <div className="flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link
-          href="/"
-          className="flex items-center"
-          onClick={() => handleNavLinkClick("/")}
-        >
+        <Link href="/" className="flex items-center">
           <img
             src="https://flowbite.com/docs/images/logo.svg"
             className="h-8 mr-3"
@@ -54,13 +41,10 @@ export default function Navbar({
         <div className="flex md:order-2">
           {!session ? (
             <>
-              <Link href="/login" onClick={() => handleNavLinkClick("/login")}>
+              <Link href="/login">
                 <Button className="mr-2 px-5">Sign In</Button>
               </Link>
-              <Link
-                href="/register"
-                onClick={() => handleNavLinkClick("/register")}
-              >
+              <Link href="/register">
                 <Button className="mr-2 md:mr-0" type="blue">
                   Sign Up
                 </Button>
@@ -110,23 +94,9 @@ export default function Navbar({
           }`}
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
-            {navLinks?.map((link) => (
-              <li
-                key={link.label}
-                onClick={() => handleNavLinkClick(link.path)}
-              >
-                <Link
-                  href={link.path}
-                  className={`block py-2 pl-3 pr-4 ${
-                    activePathname === link.path
-                      ? `text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:p-0 rounded`
-                      : `text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0`
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            {newNavLinks?.map((link, index) => {
+              return <NavItem key={index} {...link} />;
+            })}
           </ul>
         </div>
       </div>

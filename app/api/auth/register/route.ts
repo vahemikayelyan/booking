@@ -27,6 +27,7 @@ export async function POST(req: Request) {
       });
     }
   } catch (e) {
+    console.log(e);
     let message: string = "Sorry something went wrong. Please try again.";
 
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
