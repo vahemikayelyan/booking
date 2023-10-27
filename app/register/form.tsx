@@ -1,33 +1,31 @@
 "use client";
 
+import { registerUser } from "@/services/auth.service";
+import { FormError } from "@/utils/shared";
 import { FormEvent, useState } from "react";
 import Button from "../../components/Button";
 import InputGroup from "../../components/InputGroup";
 
 export default function RegisterForm() {
-  const [errorMsg, setErrorMsg] = useState<string>();
+  const [formError, setFormError] = useState<FormError>();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMsg("");
+    setFormError({});
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email")?.toString() || "";
     const password = formData.get("password")?.toString() || "";
-    const response = await fetch("api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const result: { ok: boolean; message?: string } = await response.json();
+    const response = await registerUser({ email, password });
 
-    if (result.ok) {
+    if (response.ok) {
       //console.log("is ok");
       //router.refresh();
       //router.push("/services");
     } else {
-      setErrorMsg(result.message);
+      if (response.formError) {
+        setFormError(response.formError);
+      } else {
+      }
     }
   };
 
@@ -46,15 +44,22 @@ export default function RegisterForm() {
             name="email"
             title="Your email"
             autoComplete="on"
-            error={errorMsg}
+            error={formError?.email}
             placeholder="name@company.com"
           />
 
-          <InputGroup name="password" title="Password" type="password" />
+          <InputGroup
+            name="password"
+            type="password"
+            title="Password"
+            error={formError?.password}
+          />
 
-          <Button type="blue" className="w-[6rem] py-2.5">
-            Sign up
-          </Button>
+          <div>
+            <Button type="blue" className="w-[6rem] py-2.5">
+              Sign up
+            </Button>
+          </div>
         </form>
       </div>
     </div>
