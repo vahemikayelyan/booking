@@ -11,15 +11,16 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
+model Customer {
   id String @id @default(uuid())
+  name String?
   email String @unique
   password String
 }
 
 model Provider {
-  id String @id @default(dbgenerated())
-  name String
+  id String @id @default(uuid())
+  business_name String
   email String @unique
   password String
 }
