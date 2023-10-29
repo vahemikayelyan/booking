@@ -1,6 +1,6 @@
 "use client";
 
-import { useActivePathnameStore } from "@/hooks/active-pathname";
+import { useActivePathnameStore } from "@/store/active-pathname";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ import InputGroup from "../../components/InputGroup";
 export default function LoginForm() {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>();
   const { setActivePathname } = useActivePathnameStore();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ export default function LoginForm() {
     const formData = new FormData(e.currentTarget);
 
     setErrorMsg("");
+    setIsLoading(true);
 
     const response = await signIn("credentials", {
       email: formData.get("email"),
@@ -31,6 +33,7 @@ export default function LoginForm() {
       setActivePathname("/services");
     } else {
       setErrorMsg("Incorrect credantials!");
+      setIsLoading(false);
     }
   };
 
@@ -78,7 +81,7 @@ export default function LoginForm() {
               Forgot password?
             </Link>
           </div>
-          <Button type="blue" className="w-full py-2.5">
+          <Button type="blue" className="w-full py-2.5" isLoading={isLoading}>
             Sign in
           </Button>
           <p className="text-sm font-light text-gray-500">

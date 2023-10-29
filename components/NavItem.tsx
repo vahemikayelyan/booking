@@ -1,4 +1,4 @@
-import { useActivePathnameStore } from "@/hooks/active-pathname";
+import { useActivePathnameStore } from "@/store/active-pathname";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { NavLink } from "./Header";

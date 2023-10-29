@@ -5,6 +5,7 @@ export interface AppResponse {
 }
 
 export interface FormError {
+  unknown?: string;
   email?: string;
   password?: string;
 }
