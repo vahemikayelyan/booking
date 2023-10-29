@@ -47,8 +47,9 @@ export default function RegisterForm() {
         </h1>
         <form
           className="space-y-4 md:space-y-6"
-          action="#"
           onSubmit={handleSubmit}
+          method="post"
+          action="#"
         >
           <InputGroup
             name="email"

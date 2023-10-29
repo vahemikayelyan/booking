@@ -1,14 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 
-let prisma: any;
+let prisma: PrismaClient;
 
-// check if the code is running in production
-if (process.env.NODE_ENV === "production") {
-  // in production (like Vercel), always create a new client
-  prisma = new PrismaClient();
-} else if (!prisma) {
-  // in development, prevent multiple instances of Prisma Client
-  prisma = new PrismaClient();
+// Function to initialize or get the existing Prisma Client
+function initializePrismaClient() {
+  if (!prisma) {
+    prisma = new PrismaClient({ log: ["query"] });
+  }
+
+  return prisma;
 }
+
+// Initialize Prisma Client based on the environment
+prisma = initializePrismaClient();
 
 export default prisma;
