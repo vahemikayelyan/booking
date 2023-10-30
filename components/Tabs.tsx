@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface TabsProps {
-  selectedTabId?: string;
+  defaultTabId?: string;
   children?: React.ReactNode;
-  setSelectedTabId?: React.Dispatch<React.SetStateAction<string>>;
+  onChange?: (tabId: string) => void;
 }
 
 interface TabProps {
@@ -30,13 +30,16 @@ function Tab({ id, children, isActive }: TabProps) {
   );
 }
 
-function Tabs({ children, selectedTabId, setSelectedTabId }: TabsProps) {
+function Tabs({ children, defaultTabId, onChange }: TabsProps) {
+  const [selectedTabId, setSelectedTabId] = useState(defaultTabId);
   const handleClick = (e: React.MouseEvent<HTMLUListElement>) => {
-    const target = e.target as HTMLElement;
+    const target = e.target as HTMLButtonElement;
+    const dataId = target.getAttribute("data-id") || "";
 
-    if (setSelectedTabId && target.tagName === "BUTTON") {
-      const selectedId = target.getAttribute("data-id") || "";
-      setSelectedTabId(selectedId);
+    setSelectedTabId(dataId);
+
+    if (onChange) {
+      onChange(dataId);
     }
   };
 

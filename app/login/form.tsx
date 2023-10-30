@@ -12,8 +12,8 @@ import InputGroup from "../../components/InputGroup";
 export default function LoginForm() {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string>();
-  const [activeLoginType, setActiveLoginType] = useState<string>("1");
   const [isLoading, setIsLoading] = useState<boolean>();
+  const [activeLoginType, setActiveLoginType] = useState<string>("1");
   const { setActivePathname } = useActivePathnameStore();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,8 +47,8 @@ export default function LoginForm() {
         </h1>
         <div className="mt-2 mb-6">
           <Tabs
-            selectedTabId={activeLoginType}
-            setSelectedTabId={setActiveLoginType}
+            defaultTabId={activeLoginType}
+            onChange={(tabId) => setActiveLoginType(tabId)}
           >
             <Tab id="1">Business</Tab>
             <Tab id="2">Customer</Tab>
