@@ -1,5 +1,6 @@
 "use client";
 
+import { Tab, Tabs } from "@/components/Tabs";
 import { useActivePathnameStore } from "@/store/active-pathname";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import InputGroup from "../../components/InputGroup";
 export default function LoginForm() {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string>();
+  const [activeLoginType, setActiveLoginType] = useState<string>("1");
   const [isLoading, setIsLoading] = useState<boolean>();
   const { setActivePathname } = useActivePathnameStore();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -39,10 +41,19 @@ export default function LoginForm() {
 
   return (
     <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-      <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <div className="p-6 sm:p-8">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
           Sign in to your account
         </h1>
+        <div className="mt-2 mb-6">
+          <Tabs
+            selectedTabId={activeLoginType}
+            setSelectedTabId={setActiveLoginType}
+          >
+            <Tab id="1">Business</Tab>
+            <Tab id="2">Customer</Tab>
+          </Tabs>
+        </div>
         <form
           action="#"
           className="space-y-4 md:space-y-6"
@@ -50,12 +61,12 @@ export default function LoginForm() {
         >
           <InputGroup
             name="email"
-            title="Your email"
+            placeholder="Your email"
             autoComplete="on"
             error={errorMsg}
           />
 
-          <InputGroup name="password" title="Password" type="password" />
+          <InputGroup name="password" placeholder="Password" type="password" />
 
           <div className="flex items-center justify-between">
             <div className="flex items-start">

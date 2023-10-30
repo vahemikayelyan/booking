@@ -27,7 +27,11 @@ const handler = NextAuth({
           return null;
         }
 
-        return user;
+        return {
+          id: String(user.id),
+          name: user.name,
+          email: user.email,
+        };
       },
     }),
   ],
