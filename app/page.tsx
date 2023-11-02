@@ -1,8 +1,11 @@
 "use client";
 
+import Alert from "@/components/Alert";
 import { useState } from "react";
 
 export default function HomePage() {
+  const [message, setMessage] = useState("");
+  const [html, setHtml] = useState("");
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e: any) => {
@@ -28,11 +31,13 @@ export default function HomePage() {
         },
         body: formData,
       });
+      const result = await response.json();
 
-      if (response.status === 200) {
-        alert("File uploaded successfully.");
+      if (result.ok) {
+        setMessage("File uploaded successfully.");
+        setHtml(result.data);
       } else {
-        alert("Failed to upload file.");
+        setMessage("Failed to upload file.");
       }
     } catch (error) {
       console.error("There was an error uploading the file:", error);
@@ -44,6 +49,8 @@ export default function HomePage() {
       <h1>Upload a PDF File</h1>
       <input type="file" accept="application/pdf" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
+      <Alert message={message} />
+      <div>{html}</div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest } from "next";
 import path from "path";
 
 export const config = {
@@ -8,9 +8,11 @@ export const config = {
   },
 };
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextApiRequest) {
   const { Poppler } = await import("node-poppler");
-  const poppler = new Poppler();
+  const poppler = new Poppler(
+    "C:/Users/Vahe/source/booking/node_modules/node-poppler/src/lib/win32/poppler-23.07.0/Library/bin"
+  );
   const chunks: Buffer[] = [];
 
   for await (let chunk of req.body) {
@@ -31,11 +33,11 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
 
     // Clean up temporary files
     await fs.unlink(tempPdfPath);
-    await fs.unlink(outputPath);
+    //await fs.unlink(outputPath);
 
     // Send back the HTML content
-    Response.json({ ok: true, data: htmlContent });
+    return Response.json({ ok: true, data: htmlContent });
   } catch (error) {
-    Response.json({ ok: false });
+    return Response.json({ ok: false });
   }
 }
