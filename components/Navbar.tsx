@@ -2,13 +2,13 @@
 "use client";
 
 import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Button from "./Button";
 import { NavLink } from "./Header";
 import NavItem from "./NavItem";
+import UserMenu from "./UserMenu";
 
 export default function Navbar({
   navLinks,
@@ -51,15 +51,7 @@ export default function Navbar({
               </Link>
             </>
           ) : (
-            <>
-              <Button
-                className="w-full mr-2 md:mr-0"
-                onClick={() => signOut({ callbackUrl: "/login" })}
-              >
-                Sign out
-              </Button>
-              <span>{session.user?.email}</span>
-            </>
+            <UserMenu {...session} />
           )}
           <button
             type="button"
