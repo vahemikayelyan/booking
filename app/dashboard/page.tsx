@@ -4,9 +4,9 @@ import { useRef, useState } from "react";
 
 const lyrics1 = [
   [
-    { word: "Hey", start: "00.25.500", duration: 350 },
+    { word: "Hey", start: "00.25.620", duration: 350 },
     { word: "jan", start: "00.26.00", duration: 300 },
-    { word: "ghapama", start: "00.26.400", duration: 900 },
+    { word: "ghapama", start: "00.26.633", duration: 700 },
   ],
   [
     { word: "Hamov", start: "00.27.500", duration: 400 },
@@ -51,12 +51,28 @@ export default function FileUploader() {
   const [intervaId, setIntervalId] = useState<any>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const handleFileChange = (event: any) => {
+  const handleFileChange = async (event: any) => {
     const file = event.target.files[0];
 
     if (file) {
       const localAudioSrc = URL.createObjectURL(file);
       setAudioSrc(localAudioSrc);
+
+      const formData = new FormData();
+      formData.append("file", file);
+      const response = await fetch("api/auth/spleeter", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result) {
+        //const audio = new Audio('/public/output/harut/vocals.wav');
+        //audio.load();
+        //audio.play();
+        //setAudioSrc('public/output/harut/vocals.wav')
+      }
     }
   };
 
@@ -87,7 +103,7 @@ export default function FileUploader() {
     <div>
       <input
         type="file"
-        accept="audio/mp3,audio/*"
+        accept="*"
         onChange={handleFileChange}
       />
       {audioSrc && (
