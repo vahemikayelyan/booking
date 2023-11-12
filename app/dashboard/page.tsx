@@ -4,19 +4,19 @@ import { useRef, useState } from "react";
 
 const lyrics1 = [
   [
-    { word: "Hey", start: "00.25.620", duration: 350 },
-    { word: "jan", start: "00.26.00", duration: 300 },
-    { word: "ghapama", start: "00.26.633", duration: 700 },
+    { word: "Hey", start: "00.25.500", duration: 320 },
+    { word: "jan", start: "00.26.000", duration: 300 },
+    { word: "ghapama", start: "00.26.500", duration: 700 },
   ],
   [
     { word: "Hamov", start: "00.27.500", duration: 400 },
-    { word: "hodov", start: "00.28.00", duration: 400 },
-    { word: "ghapama", start: "00.28.500", duration: 900 },
+    { word: "hodov", start: "00.28.100", duration: 400 },
+    { word: "ghapama", start: "00.28.700", duration: 700 },
   ],
   [
     { word: "Hey", start: "00.29.600", duration: 350 },
-    { word: "jan", start: "00.30.100", duration: 300 },
-    { word: "ghapama", start: "00.30.200", duration: 900 },
+    { word: "jan", start: "00.30.150", duration: 300 },
+    { word: "ghapama", start: "00.30.650", duration: 700 },
   ],
   [
     { word: "Hamov", start: "00.31.100", duration: 500 },
@@ -94,7 +94,7 @@ export default function FileUploader() {
       const totalMs = getTotalMs(minutes, seconds, ms);
 
       setCurrentMsTotal(totalMs);
-    }, 1);
+    }, 0);
 
     setIntervalId(id);
   };
@@ -138,9 +138,9 @@ export default function FileUploader() {
                     "--erase-duration": `${item.duration}ms`,
                   };
 
-                  if (startMsTotal + item.duration <= currentMsTotal) {
+                  if (startMsTotal + item.duration < currentMsTotal) {
                     className = " text-red-500";
-                  } else if (startMsTotal <= currentMsTotal) {
+                  } else if (startMsTotal < currentMsTotal) {
                     className = " text-red-500 animate-erase";
                   }
 

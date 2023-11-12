@@ -1,7 +1,7 @@
 import librosa
 
 # Load the audio file
-y, sr = librosa.load('public/output/harut/vocals_denoised.wav')
+y, sr = librosa.load('public/output/harut/denoised.wav')
 
 # Detect onsets
 onsets = librosa.onset.onset_detect(y=y, sr=sr)
