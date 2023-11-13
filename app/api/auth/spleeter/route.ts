@@ -1,29 +1,45 @@
 import { exec } from "child_process";
 import fs from "fs";
+import { writeFile } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
+import path, { join } from "path";
 import { promisify } from "util";
 
 const execAsync = promisify(exec);
+const PUBLIC_PATH = path.join(process.cwd(), "public");
+const UPLOAD_PATH = join(PUBLIC_PATH, "uploads");
 
 export async function POST(req: NextRequest) {
-  //const formData = await req.formData();
-  //const file = formData.get("file") as File;
-  const inputFile = path.join(process.cwd(), "public", "harut.mp3");
+  const formData = await req.formData();
+  const file = formData.get("file") as unknown as File;
 
-  if (fs.existsSync(inputFile)) {
-    const outputDir = path.join(process.cwd(), "public/output");
+  if (!file) {
+    return NextResponse.json({ error: "No file was found." }, { status: 500 });
+  }
 
+  if (!fs.existsSync(UPLOAD_PATH)) {
+    fs.mkdirSync(UPLOAD_PATH, { recursive: true });
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  const filePath = join(UPLOAD_PATH, file.name);
+
+  await writeFile(filePath, buffer);
+
+  if (fs.existsSync(filePath)) {
     try {
-      const { stdout, stderr } = await execAsync(
-        `spleeter separate ${inputFile} -o ${outputDir}`
+      //fs.chownSync(filePath, 1000, 1000);
+
+      const { stderr } = await execAsync(
+        `python3 utils/run_spleeter.py ${filePath} ${UPLOAD_PATH}`
       );
 
       if (stderr) {
         return NextResponse.json({ error: stderr }, { status: 500 });
       }
 
-      exec("python3 utils/run_librosa.py", (error, stdout, stderr) => {
+      /*exec(`python3 utils/run_librosa.py`, (error, stdout, stderr) => {
         if (error) {
           console.error(`Execution error: ${error}`);
           return;
@@ -34,10 +50,10 @@ export async function POST(req: NextRequest) {
         if (stderr) {
           console.error(`stderr: ${stderr}`);
         }
-      });
+      });*/
 
       return NextResponse.json({
-        message: "Files have been successfully separated and saved.",
+        message: "Files have been successfully processed and saved.",
       });
     } catch (error: any) {
       return NextResponse.json({ error: error }, { status: 500 });
