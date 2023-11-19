@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       //fs.chmodSync(filePath, 777);
 
       const { stderr } = await execAsync(
-        `spleeter separate ${filePath} -o ${UPLOAD_PATH}`
+        `python3 -m spleeter separate ${filePath} -o ${UPLOAD_PATH}`
       );
 
       if (stderr) {
