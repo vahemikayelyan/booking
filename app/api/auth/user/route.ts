@@ -1,10 +1,10 @@
 import prisma from "@/prisma/client";
-import { AppResponse, FormError } from "@/utils/shared";
+import { ApiResponse, FormError } from "@/utils/shared";
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import validator from "validator";
 
-export interface RegisterResponse extends AppResponse {
+export interface RegisterResponse extends ApiResponse {
   formError?: FormError;
 }
 

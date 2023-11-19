@@ -1,28 +1,38 @@
 import { useEffect, useRef } from "react";
 
-export interface AppResponse {
+export interface ApiResponse {
   ok?: boolean;
   error?: string;
   message?: string;
 }
 
 export interface FormError {
-  unknown?: string;
   email?: string;
+  unknown?: string;
   password?: string;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_GATEWAY_URL;
 
-export function postRequest(api: string, body: any) {
+export async function postRequest(
+  api: string,
+  body: any,
+  json: boolean = true
+): Promise<any> {
   const url = `${API_URL}${api}`;
+  let headers;
 
-  return fetch(url, {
-    method: "POST",
-    headers: {
+  if (json) {
+    body = JSON.stringify(body);
+    headers = {
       "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
+    };
+  }
+
+  return await fetch(url, {
+    method: "POST",
+    headers,
+    body,
   });
 }
 

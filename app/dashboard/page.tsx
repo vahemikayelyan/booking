@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import AudioPlayer from "./AudioPlayer";
 
 const lyrics1 = [
   [
@@ -101,11 +102,7 @@ export default function FileUploader() {
 
   return (
     <div>
-      <input
-        type="file"
-        accept="*"
-        onChange={handleFileChange}
-      />
+      <AudioPlayer />
       {audioSrc && (
         <audio
           controls

@@ -29,10 +29,10 @@ export async function POST(req: NextRequest) {
 
   if (fs.existsSync(filePath)) {
     try {
-      fs.chmodSync(filePath, 777);
+      //fs.chmodSync(filePath, 777);
 
       const { stderr } = await execAsync(
-        `python3 utils/run_spleeter.py ${filePath} ${UPLOAD_PATH}`
+        `spleeter separate ${filePath} -o ${UPLOAD_PATH}`
       );
 
       if (stderr) {

@@ -31,8 +31,8 @@ export default function LoginForm() {
 
     if (response?.ok) {
       router.refresh();
-      router.push("/services");
-      setActivePathname("/services");
+      router.push("/dashboard");
+      setActivePathname("/dashboard");
     } else {
       setErrorMsg("Incorrect credantials!");
       setIsLoading(false);
