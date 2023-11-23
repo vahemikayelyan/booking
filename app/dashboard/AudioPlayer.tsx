@@ -3,7 +3,7 @@ import OptionsModal from "./OptionsModal";
 
 const AudioPlayer = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [popupDisplay, setPopupDisplay] = useState(false);
+  const [audioFile, setAudioFile] = useState<HTMLAudioElement>();
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -13,7 +13,12 @@ const AudioPlayer = () => {
       const file = files[0];
 
       if (file) {
-        setPopupDisplay(true);
+        const audio = new Audio(URL.createObjectURL(file));
+
+        audio.onloadeddata = () => {
+          setAudioFile(audio);
+        };
+
         //const localAudioSrc = URL.createObjectURL(file);
         //const formData = new FormData();
         //formData.append("file", file)
@@ -24,7 +29,7 @@ const AudioPlayer = () => {
   };
 
   const closePopup = () => {
-    setPopupDisplay(false);
+    setAudioFile(undefined);
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -41,7 +46,9 @@ const AudioPlayer = () => {
           onChange={handleFileChange}
         />
       </div>
-      {popupDisplay && <OptionsModal closePopup={closePopup} />}
+      {audioFile && (
+        <OptionsModal duration={audioFile.duration} closePopup={closePopup} />
+      )}
     </>
   );
 };

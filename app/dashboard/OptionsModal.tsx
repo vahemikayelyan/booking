@@ -4,14 +4,19 @@ import RangeSlider from "@/components/RangeSlider";
 import { useState } from "react";
 
 interface OptionsModalProps {
+  duration: number;
   closePopup: () => void;
 }
 
-const OptionsModal = ({ closePopup }: OptionsModalProps) => {
+const OptionsModal = ({ duration, closePopup }: OptionsModalProps) => {
   const [uploadState, setUploadState] = useState("no");
   const handleStateChange = (event: any) => {
     setUploadState(event.target.value);
   };
+
+  const minutes = Math.floor(duration / 60);
+  const seconds = Math.floor(duration % 60);
+  const ms = Math.floor((duration % 1) * 1000);
 
   return (
     <>
@@ -76,12 +81,18 @@ const OptionsModal = ({ closePopup }: OptionsModalProps) => {
               </li>
             </ul>
 
-            <RangeSlider
-              label={{ name: "Duration:", value: "3 min, 12 sec" }}
-              disabled={uploadState === "no"}
-            />
+            <div className="mb-2">
+              Duration:{" "}
+              <b>
+                {minutes} min, {seconds} sec
+              </b>
+            </div>
 
-            <div className="flex items-center mt-6 space-x-2 rtl:space-x-reverse">
+            <div className="h-8">
+              <RangeSlider min={0} max={1000} onChange={({ min, max }) => {}} />
+            </div>
+
+            <div className="flex items-center mt-4 space-x-2 rtl:space-x-reverse">
               <Button type="blue">Submit</Button>
               <Button onClick={closePopup}>Cancel</Button>
             </div>
