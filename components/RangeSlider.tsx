@@ -20,7 +20,7 @@ const RangeSlider = ({ min, max, onChange }: Props) => {
     [min, max]
   );
 
-  function getSliderThumb(isMinThumb?: boolean): ReactElement {
+  const getSliderThumb = (isMinThumb?: boolean): ReactElement => {
     return (
       <input
         type="range"
@@ -38,7 +38,7 @@ const RangeSlider = ({ min, max, onChange }: Props) => {
         className={`absolute z-30 h-0 w-full outline-none appearance-none pointer-events-none ${styles.thumb}`}
       />
     );
-  }
+  };
 
   // Set width of the range to decrease from the left side
   useEffect(() => {
