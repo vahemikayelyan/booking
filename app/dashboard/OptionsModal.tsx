@@ -89,7 +89,7 @@ const OptionsModal = ({ duration, closePopup }: OptionsModalProps) => {
             </div>
 
             <div className="h-8">
-              <RangeSlider min={0} max={1000} onChange={({ min, max }) => {}} />
+              <RangeSlider min={0} max={174} onChange={({ min, max }) => {}} />
             </div>
 
             <div className="flex items-center mt-4 space-x-2 rtl:space-x-reverse">
