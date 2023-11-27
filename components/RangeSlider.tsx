@@ -89,8 +89,8 @@ const RangeSlider = ({ min, max, isDisabled, onChange }: Props) => {
           isDisabled ? "bg-gray-200" : "bg-sky-400"
         }`}
       />
-      <div className="absolute top-3">{minVal}</div>
-      <div className="absolute top-3 right-1">{maxVal}</div>
+      <div className="absolute top-4">{minVal}</div>
+      <div className="absolute top-4 right-0">{maxVal}</div>
     </div>
   );
 };
