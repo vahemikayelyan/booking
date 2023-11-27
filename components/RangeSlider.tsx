@@ -4,10 +4,11 @@ import styles from "./styles.module.css";
 interface Props {
   min: number;
   max: number;
+  isDisabled?: boolean;
   onChange?: (props: Props) => void;
 }
 
-const RangeSlider = ({ min, max, onChange }: Props) => {
+const RangeSlider = ({ min, max, isDisabled, onChange }: Props) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);
   const minValRef = useRef<HTMLInputElement>(null);
@@ -26,6 +27,7 @@ const RangeSlider = ({ min, max, onChange }: Props) => {
         type="range"
         min={min}
         max={max}
+        disabled={isDisabled}
         value={isMinThumb ? minVal : maxVal}
         ref={isMinThumb ? minValRef : maxValRef}
         onChange={(event) => {
@@ -35,7 +37,8 @@ const RangeSlider = ({ min, max, onChange }: Props) => {
             : Math.max(targetValue, minVal + 1);
           isMinThumb ? setMinVal(value) : setMaxVal(value);
         }}
-        className={`absolute z-30 h-0 w-full outline-none appearance-none pointer-events-none ${styles.thumb}`}
+        className={`absolute h-full z-30 bg-transparent w-full outline-none
+                    appearance-none pointer-events-none ${styles.thumb}`}
       />
     );
   };
@@ -72,19 +75,22 @@ const RangeSlider = ({ min, max, onChange }: Props) => {
   }, [minVal, maxVal, onChange]);
 
   return (
-    <div className="relative">
+    <div className="relative h-[6px]">
       {getSliderThumb(true)}
       {getSliderThumb()}
-
-      <div className="relative w-full">
-        <div className="absolute h-[5px] rounded-[3px] w-full bg-slate-400 z-10" />
-        <div
-          ref={range}
-          className="absolute h-[5px] rounded-[3px] bg-sky-400 z-20"
-        />
-        <div className="absolute top-3">{minVal}</div>
-        <div className="absolute top-3 right-1">{maxVal}</div>
-      </div>
+      <div
+        className={`absolute h-full rounded-[3px] w-full z-10 ${
+          isDisabled ? "bg-gray-200" : "bg-gray-400"
+        }`}
+      />
+      <div
+        ref={range}
+        className={`absolute h-full rounded-[3px] z-20 ${
+          isDisabled ? "bg-gray-200" : "bg-sky-400"
+        }`}
+      />
+      <div className="absolute top-3">{minVal}</div>
+      <div className="absolute top-3 right-1">{maxVal}</div>
     </div>
   );
 };
