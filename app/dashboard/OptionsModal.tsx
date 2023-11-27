@@ -41,7 +41,7 @@ const OptionsModal = ({ duration, closePopup }: OptionsModalProps) => {
             </h3>
 
             <ul className="mb-4 w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
-              <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+              <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
                 <div className="flex items-center ps-3">
                   <input
                     id="horizontal-list-radio-license"
@@ -60,7 +60,7 @@ const OptionsModal = ({ duration, closePopup }: OptionsModalProps) => {
                   </label>
                 </div>
               </li>
-              <li className="w-full dark:border-gray-600">
+              <li className="w-full">
                 <div className="flex items-center ps-3">
                   <input
                     id="horizontal-list-radio-passport"
@@ -91,7 +91,7 @@ const OptionsModal = ({ duration, closePopup }: OptionsModalProps) => {
             <div className="h-8">
               <RangeSlider
                 min={0}
-                max={174}
+                max={minutes * 60 + seconds}
                 isDisabled={uploadState === "no"}
                 onChange={({ min, max }) => {}}
               />
