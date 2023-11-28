@@ -5,7 +5,7 @@ import { useState } from "react";
 
 interface OptionsModalProps {
   duration: number;
-  closePopup: () => void;
+  closePopup: (submit?: boolean) => void;
 }
 
 const OptionsModal = ({ duration, closePopup }: OptionsModalProps) => {
@@ -98,7 +98,9 @@ const OptionsModal = ({ duration, closePopup }: OptionsModalProps) => {
             </div>
 
             <div className="flex items-center mt-4 space-x-2 rtl:space-x-reverse">
-              <Button type="blue">Submit</Button>
+              <Button type="blue" onClick={() => closePopup(true)}>
+                Submit
+              </Button>
               <Button onClick={closePopup}>Cancel</Button>
             </div>
           </div>
