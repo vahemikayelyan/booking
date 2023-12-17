@@ -5,6 +5,7 @@ import OptionsModal from "./OptionsModal";
 const AudioPlayer = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [audioFile, setAudioFile] = useState<HTMLAudioElement>();
+  const [isUploading, setIsUploading] = useState<boolean>();
   const [fileData, setFileData] = useState<File>();
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -26,9 +27,14 @@ const AudioPlayer = () => {
     setAudioFile(undefined);
 
     if (submit && fileData) {
+      setIsUploading(true);
       const formData = new FormData();
       formData.append("file", fileData);
       const response = await postRequest("spleeter", formData, false);
+      setIsUploading(false);
+
+      if (response.ok) {
+      }
     } else if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -37,12 +43,16 @@ const AudioPlayer = () => {
   return (
     <>
       <div className="text-center mt-4">
-        <input
-          accept="*"
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-        />
+        {!isUploading ? (
+          <input
+            accept="*"
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+          />
+        ) : (
+          <span>Please wait, file is being processed...</span>
+        )}
       </div>
       {audioFile && (
         <OptionsModal duration={audioFile.duration} closePopup={closePopup} />

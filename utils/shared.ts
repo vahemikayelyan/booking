@@ -18,7 +18,7 @@ export async function postRequest(
   api: string,
   body: any,
   json: boolean = true
-): Promise<any> {
+): Promise<ApiResponse> {
   const url = `${API_URL}${api}`;
   let headers;
 

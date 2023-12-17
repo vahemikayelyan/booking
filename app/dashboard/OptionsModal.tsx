@@ -22,7 +22,7 @@ const OptionsModal = ({ duration, closePopup }: OptionsModalProps) => {
     <>
       <div className="fixed z-50 justify-center items-center w-full flex">
         <div className="relative bg-white rounded-lg shadow w-[40%] max-h-full">
-          <CloseIcon onClick={closePopup} />
+          <CloseIcon onClick={() => closePopup()} />
 
           <div className="p-4 md:p-5">
             <svg
@@ -101,7 +101,7 @@ const OptionsModal = ({ duration, closePopup }: OptionsModalProps) => {
               <Button type="blue" onClick={() => closePopup(true)}>
                 Submit
               </Button>
-              <Button onClick={closePopup}>Cancel</Button>
+              <Button onClick={() => closePopup()}>Cancel</Button>
             </div>
           </div>
         </div>

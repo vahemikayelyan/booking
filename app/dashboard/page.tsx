@@ -114,7 +114,7 @@ export default function FileUploader() {
           Your browser does not support the audio element.
         </audio>
       )}
-      <div className="flex justify-center pt-6">
+      {/*<div className="flex justify-center pt-6">
         <div className="w-[80%] mt-6 text-5xl text-center font-sans">
           {lyrics1.map((chunk, i) => {
             return (
@@ -157,7 +157,7 @@ export default function FileUploader() {
             );
           })}
         </div>
-      </div>
+        </div>*/}
     </div>
   );
 }
