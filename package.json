@@ -9,33 +9,33 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "~5.5.2",
-    "@types/node": "^20.9.0",
-    "@types/react": "~18.2.34",
+    "@prisma/client": "~5.7.1",
+    "@types/node": "^20.10.5",
+    "@types/react": "~18.2.45",
     "bcryptjs": "~2.4.3",
     "formidable": "^3.5.1",
     "mysql": "~2.18.1",
-    "next": "~14.0.1",
-    "next-auth": "~4.24.4",
+    "next": "~14.0.4",
+    "next-auth": "~4.24.5",
     "react": "~18.2.0",
     "react-dom": "^18",
     "spleeter": "^0.1.0",
     "validator": "~13.11.0",
-    "zustand": "~4.4.5"
+    "zustand": "~4.4.7"
   },
   "devDependencies": {
-    "@types/bcryptjs": "~2.4.5",
-    "@types/busboy": "~1.5.2",
+    "@types/bcryptjs": "~2.4.6",
+    "@types/busboy": "~1.5.3",
     "@types/formidable": "^3.4.5",
     "@types/react-dom": "^18",
-    "@types/validator": "~13.11.5",
+    "@types/validator": "~13.11.7",
     "autoprefixer": "^10",
     "eslint": "^8",
-    "eslint-config-next": "14.0.1",
+    "eslint-config-next": "14.0.4",
     "postcss": "^8",
-    "prisma": "~5.5.2",
+    "prisma": "~5.7.1",
     "tailwindcss": "^3",
-    "ts-node": "~10.9.1",
-    "typescript": "~5.2.2"
+    "ts-node": "~10.9.2",
+    "typescript": "~5.3.3"
   }
 }
